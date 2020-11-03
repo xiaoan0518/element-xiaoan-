@@ -1,7 +1,8 @@
 <template>
   <div>
-    <!-- height   设置表格的高度 
-        max-height   表格的最大高度
+    <!--
+
+        el-table标签
         stripe   是否有斑马纹
         border   是否带有纵向边框
         size     table的尺寸
@@ -21,6 +22,16 @@
         cell-click	      当某个单元格被点击时会触发该事件
         header-click	    当某一列的表头被点击时会触发该事件
         clearSelection	  用于多选表格，清空用户的选择
+
+
+        el-table-column标签
+        height            设置表格的高度 
+        max-height        表格的最大高度
+        index             如果设置了 type=index，可以通过传递 index 属性来自定义索引
+        fixed	            列是否固定在左侧或者右侧，true 表示固定在左侧
+        show-overflow-tooltip	当内容过长被隐藏时显示 弹出信息
+        class-name	      列的 className
+        label-class-name	当前列标题的自定义类名
         
         
    -->
@@ -42,9 +53,9 @@
         :span-method="arraySpanMethod"
         @selection-change="handleSelectionChange"
         @cell-mouse-enter="CellMouseEnter"
-        @cell-click ="CellClick"
+        @cell-click="CellClick"
         @header-click="HeaderClick"
-        @sort-change ="SortChange"
+        @sort-change="SortChange"
       >
         <!-- 第一种写法 -->
         <!-- <el-table-column
@@ -64,7 +75,15 @@
 
         <!-- 第二种写法 -->
         <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column label="日期" width="180" sortable prop="date">
+        <el-table-column type="index" width="55"> </el-table-column>
+        <el-table-column
+          label="日期"
+          width="180"
+          sortable
+          prop="date"
+          fixed="left"
+          label-class-name="columnList"
+        >
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.date }}</span>
@@ -90,7 +109,7 @@
               <p>住址: {{ scope.row.address }}</p>
             </el-popover> -->
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.name }}</el-tag>
+              <el-tag size="medium">{{ scope.row.address }}</el-tag>
             </div>
           </template>
         </el-table-column>
@@ -128,7 +147,8 @@ export default {
           date: "2016-05-02",
           name: "王小虎",
           age: 18,
-          address: "上海市普陀区金沙江路 1518 弄"
+          address:
+            "上海市普陀区金沙江路 1518 弄少时诵诗书所所所所所所所所所所所所所所所所所所所"
         },
         {
           date: "2016-05-04",
@@ -193,33 +213,28 @@ export default {
       return row.address;
     },
     arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex % 2 === 1) {
-        if (columnIndex === 1) {
-          return [1, 2];
-        } else if (columnIndex === 1) {
-          return [0, 0];
-        }
-      }
+      // if (rowIndex % 2 === 1) {
+      //   if (columnIndex === 1) {
+      //     return [1, 2];
+      //   } else if (columnIndex === 1) {
+      //     return [0, 0];
+      //   }
+      // }
     },
     handleSelectionChange(val) {
       // console.log(val);
-      
     },
-    CellMouseEnter(row, column, cell, event){
+    CellMouseEnter(row, column, cell, event) {
       // console.log(row, column, cell, event);
-      
     },
-    CellClick(row, column, cell, event){
+    CellClick(row, column, cell, event) {
       // console.log( event);
-      
     },
-    HeaderClick(column, event){
+    HeaderClick(column, event) {
       // console.log(column, event);
-      
     },
-    SortChange({column, prop, order} ){
+    SortChange({ column, prop, order }) {
       // console.log(prop, order);
-      
     }
   }
 };
@@ -240,5 +255,8 @@ export default {
 }
 .bacColorf4984e {
   background: #f4984e;
+}
+.columnList {
+  background: red;
 }
 </style>
