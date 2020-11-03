@@ -1,6 +1,6 @@
 <template>
   <div>
-   <!-- height   设置表格的高度 
+    <!-- height   设置表格的高度 
         max-height   表格的最大高度
         stripe   是否有斑马纹
         border   是否带有纵向边框
@@ -9,18 +9,42 @@
         show-header   是否显示表头
         highlight-current-row   当前行高亮 没有用到
         row-class-name  行的 className 的回调方法  owIndex就是需要高亮的数据在数组里面的下标，返回的class类名就是你自己定义的class类名。
-   --> 
+        row-style       行的 style 的回调方法，也可以使用一个固定的 Object 为所有行设置一样的 Style。（用处不大）
+        cell-class-name  单元格的 className 的回调方法，也可以使用字符串为所有单元格设置一个固定的 className。
+        default-sort     默认的排序列的 prop 和顺序
+        sort-change	     当表格的排序条件发生变化的时候会触发该事件
+        show-summary	  是否在表尾显示合计行
+        span-method	    合并行或列的计算方法
+        selection-change	当选择项发生变化时会触发该事件
+        cell-mouse-enter	当单元格 hover 进入时会触发该事件
+        cell-mouse-leave	当单元格 hover 退出时会触发该事件
+        cell-click	      当某个单元格被点击时会触发该事件
+        header-click	    当某一列的表头被点击时会触发该事件
+        clearSelection	  用于多选表格，清空用户的选择
+        
+        
+   -->
     <template>
-      <el-table 
-      :data="tableData" 
-      style="width: 600px"
-      height="350"
-      max-height="450"
-      stripe
-      border
-      :fit="true"
-      :show-header ="true"
-      :row-class-name="tableRowClassName"
+      <el-table
+        :data="tableData"
+        style="width: 1000px"
+        height="350"
+        max-height="450"
+        stripe
+        border
+        :fit="true"
+        :show-header="true"
+        :row-class-name="tableRowClassName"
+        :row-style="rowStyle"
+        :cell-class-name="tableCellClassName"
+        :default-sort="{ prop: 'date', order: 'descending' }"
+        show-summary
+        :span-method="arraySpanMethod"
+        @selection-change="handleSelectionChange"
+        @cell-mouse-enter="CellMouseEnter"
+        @cell-click ="CellClick"
+        @header-click="HeaderClick"
+        @sort-change ="SortChange"
       >
         <!-- 第一种写法 -->
         <!-- <el-table-column
@@ -39,13 +63,26 @@
       </el-table-column> -->
 
         <!-- 第二种写法 -->
-        <el-table-column label="日期" width="180">
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column label="日期" width="180" sortable prop="date">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="跳转" width="180">
+        <el-table-column label="年龄" width="180" sortable prop="age">
+          <template slot-scope="scope">
+            <i class="el-icon-time"></i>
+            <span style="margin-left: 10px">{{ scope.row.age }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="年龄" width="180" sortable prop="age">
+          <template slot-scope="scope">
+            <i class="el-icon-time"></i>
+            <span style="margin-left: 10px">{{ scope.row.age }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="跳转" width="180" sortable>
           <template slot-scope="scope">
             <!-- 划过显示hover信息 -->
             <!-- <el-popover trigger="hover" placement="top">
@@ -57,9 +94,16 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column
+          label="操作"
+          sortable
+          prop="address"
+          :formatter="formatter"
+        >
           <template slot-scope="scope">
-            <el-button size="medium" @click="redactTable(scope.$index, scope.row)"
+            <el-button
+              size="medium"
+              @click="redactTable(scope.$index, scope.row)"
               >编辑</el-button
             >
             <el-button
@@ -83,52 +127,118 @@ export default {
         {
           date: "2016-05-02",
           name: "王小虎",
+          age: 18,
           address: "上海市普陀区金沙江路 1518 弄"
         },
         {
           date: "2016-05-04",
-          name: "王小虎",
+          name: "王2虎",
+          age: 18,
           address: "上海市普陀区金沙江路 1517 弄"
         },
         {
           date: "2016-05-01",
-          name: "王小虎",
+          name: "王3虎",
+          age: 19,
           address: "上海市普陀区金沙江路 1519 弄"
         },
         {
           date: "2016-05-03",
-          name: "王小虎",
+          name: "王4虎",
+          age: 28,
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ]
     };
   },
   methods: {
-   redactTable(index, row){
-   row.name='王一刀'
-    console.log(index, row);
-    
-   },
-   deleteTable(index, row){
-    this.tableData.splice(index,1)
-   },
-   tableRowClassName({row, rowIndex}){
-    // console.log(rowIndex);
-    // if (rowIndex === 0) {
-    //  return 'active'
-    // }else{
-    //  return ''
-    // }
-   }
-  },
+    // 更改
+    redactTable(index, row) {
+      row.name = "王一刀";
+      console.log(index, row);
+    },
+    //  删除
+    deleteTable(index, row) {
+      this.tableData.splice(index, 1);
+    },
+    tableRowClassName({ row, rowIndex }) {
+      // console.log(rowIndex);
+      // if (rowIndex === 0) {
+      //  return 'active'
+      // }else{
+      //  return ''
+      // }
+    },
+    rowStyle({ row, rowIndex }) {
+      // let styleJson = {
+      //       "background":"green"
+      //     };
+      // return styleJson
+    },
+    tableCellClassName({ row, column, rowIndex, columnIndex }) {
+      // console.log(row, column, rowIndex, columnIndex);
+      // if (rowIndex === 0 && columnIndex === 0) {
+      //   return "rgb196";
+      // } else if (rowIndex === 0 && columnIndex === 1) {
+      //   return "bacColorf4984e";
+      // } else if (rowIndex === 0 && columnIndex === 2) {
+      //   return "bacColor317eb0";
+      // }else if (rowIndex === 2 && columnIndex === 1) {
+      //   return "bacColor317eb0";
+      // }
+    },
+    formatter(row, column) {
+      console.log(row, column);
+
+      return row.address;
+    },
+    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex % 2 === 1) {
+        if (columnIndex === 1) {
+          return [1, 2];
+        } else if (columnIndex === 1) {
+          return [0, 0];
+        }
+      }
+    },
+    handleSelectionChange(val) {
+      // console.log(val);
+      
+    },
+    CellMouseEnter(row, column, cell, event){
+      // console.log(row, column, cell, event);
+      
+    },
+    CellClick(row, column, cell, event){
+      // console.log( event);
+      
+    },
+    HeaderClick(column, event){
+      // console.log(column, event);
+      
+    },
+    SortChange({column, prop, order} ){
+      // console.log(prop, order);
+      
+    }
+  }
 };
 </script>
 
-<style lang="less"  >
-.el-table--enable-row-hover .el-table__body tr:hover>td{
-	background-color: #9FB6CD;
+<style lang="less">
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #9fb6cd;
 }
-.el-table .active{
- background: pink;
+.el-table .active {
+  background: pink;
+}
+.rgb196 {
+  background: rgb(196, 196, 196);
+}
+.bacColor317eb0 {
+  background: #317eb0;
+}
+.bacColorf4984e {
+  background: #f4984e;
 }
 </style>
