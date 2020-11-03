@@ -135,6 +135,38 @@
         </el-table-column>
       </el-table>
     </template>
+
+
+
+    <!-- 
+
+      small	           是否使用小型分页样式
+      background	     是否为分页按钮添加背景色	
+      page-size	       每页显示条目个数  总条数
+      total            总条数
+      current-page     默认当前显示页数（点击后显示页数）
+      layout          组件布局
+      page-sizes	    每页显示个数(数组)
+      disabled	      是否禁用
+
+      size-change     事件名（pageSize改变时会触发）
+      current-change  事件名（currentPage点击页数改变时会触发）
+     -->
+    <div class="block">
+      <el-pagination
+        small
+        background
+        
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[1, 2, 3, 4]"
+        :page-size="tableData.length"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="tableData.length"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -142,6 +174,7 @@
 export default {
   data() {
     return {
+      currentPage4: 4,
       tableData: [
         {
           date: "2016-05-02",
@@ -235,7 +268,13 @@ export default {
     },
     SortChange({ column, prop, order }) {
       // console.log(prop, order);
-    }
+    },
+     handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      }
   }
 };
 </script>

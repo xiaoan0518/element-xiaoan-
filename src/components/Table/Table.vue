@@ -1,12 +1,7 @@
 <template>
   <div>
-  
     <template>
-      <el-table 
-      :data="tableData" 
-      style="width: 100%"
-     
-      >
+      <el-table :data="tableData" style="width: 100%">
         <el-table-column label="日期" width="180">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
@@ -15,7 +10,6 @@
         </el-table-column>
         <el-table-column label="跳转" width="180">
           <template slot-scope="scope">
-          
             <div slot="reference" class="name-wrapper">
               <el-tag size="medium">{{ scope.row.name }}</el-tag>
             </div>
@@ -23,7 +17,9 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="medium" @click="redactTable(scope.$index, scope.row)"
+            <el-button
+              size="medium"
+              @click="redactTable(scope.$index, scope.row)"
               >编辑</el-button
             >
             <el-button
@@ -36,6 +32,19 @@
         </el-table-column>
       </el-table>
     </template>
+    <div class="block">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[1, 2, 3, 4]"
+        :page-size="50"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="tableData.length"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -68,19 +77,21 @@ export default {
     };
   },
   methods: {
-   redactTable(index, row){
-   row.name='王一刀'
-    console.log(index, row);
-    
-   },
-   deleteTable(index, row){
-    this.tableData.splice(index,1)
-   },
-  
-  },
+    redactTable(index, row) {
+      row.name = "王一刀";
+      console.log(index, row);
+    },
+    deleteTable(index, row) {
+      this.tableData.splice(index, 1);
+    },
+     handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      }
+  }
 };
 </script>
 
-<style lang="less"  >
-
-</style>
+<style lang="less"></style>
