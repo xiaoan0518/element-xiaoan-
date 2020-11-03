@@ -298,4 +298,5 @@ export default {
 .columnList {
   background: red;
 }
+
 </style>
