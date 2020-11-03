@@ -13,7 +13,7 @@
     <template>
       <el-table 
       :data="tableData" 
-      style="width: 100%"
+      style="width: 600px"
       height="350"
       max-height="450"
       stripe
