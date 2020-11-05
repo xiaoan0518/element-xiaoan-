@@ -15,6 +15,7 @@
 import ISHOWBLACK from './ishowblack'
 import TABLEFULL from './Table/Tablefull'
 // import TABLE from './Table/Tablefull'
+
 export default {
     components:{
         ISHOWBLACK,
