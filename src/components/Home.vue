@@ -4,7 +4,8 @@
     <!-- 三角动画按钮 -->
     <ISHOWBLACK></ISHOWBLACK>
     <!-- 表格+分页 -->
-    <TABLE></TABLE>
+    <!-- <TABLE></TABLE> -->
+    <TABLEFULL></TABLEFULL>
     
     
      
@@ -13,11 +14,13 @@
 
 <script>
 import ISHOWBLACK from './ishowblack'
-import TABLE from './Table/Tablefull'
+import TABLEFULL from './Table/Tablefull'
+// import TABLE from './Table/Tablefull'
 export default {
     components:{
         ISHOWBLACK,
-        TABLE
+        TABLEFULL,
+        // TABLE
     },
     props: {
 
