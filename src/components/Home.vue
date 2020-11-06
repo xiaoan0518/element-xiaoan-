@@ -6,7 +6,8 @@
     <!-- 表格+分页 -->
     <!-- <TABLE></TABLE> -->
     <TABLEFULL></TABLEFULL>
-    
+    <!-- P排序todolist   input惊醒天加 -->
+    <SORTTODO></SORTTODO>
     
      
     </div>
@@ -16,11 +17,13 @@
 import ISHOWBLACK from './ishowblack'
 import TABLEFULL from './Table/Tablefull'
 // import TABLE from './Table/Tablefull'
+import SORTTODO from './TodoList/sortTodo'
 export default {
     components:{
         ISHOWBLACK,
         TABLEFULL,
-        // TABLE
+        // TABLE,
+        SORTTODO
     },
     props: {
 
