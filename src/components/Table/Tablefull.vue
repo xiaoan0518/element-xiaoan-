@@ -167,6 +167,7 @@
       >
       </el-pagination>
     </div>
+    <hr>
   </div>
 </template>
 
@@ -298,4 +299,5 @@ export default {
 .columnList {
   background: red;
 }
+
 </style>
