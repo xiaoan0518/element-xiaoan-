@@ -12,12 +12,13 @@
       id:{{item.id}}------- 姓名：{{item.name}}  --------年龄：{{item.age}}
       
     </el-timeline-item>
-  </el-timeline>\
+  </el-timeline>
   
    <el-radio-group v-model="reverse">
       <el-radio :label="true">倒序</el-radio>
       <el-radio :label="false">正序</el-radio>
     </el-radio-group>
+    <hr>
 </div>
 </div>
   
