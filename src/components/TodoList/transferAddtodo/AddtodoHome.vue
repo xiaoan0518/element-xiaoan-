@@ -2,7 +2,8 @@
     <div class="AddtodoHomeWarp">
      
      <el-input v-model="serch" style="width:300px" placeholder="请输入内容" @keyup.13.native ="Addtodo"></el-input>
-     <TODOLIST :todos="todos" ref="addTodoindex"/>
+     <!-- <TODOLIST :todos="todos" ref="addTodoindex"/> -->
+     <TODOLIST :todos="todos" @addTodoindex="addTodoindex"/>
     </div>
 </template>
 
@@ -32,13 +33,15 @@ export default {
     }
     this.todos.unshift(objtodo)
    },
-    deleteTodoHome(index){
+    addTodoindex(index){
      this.todos.splice(index,1)
     },
   },
 
    mounted() {
-   this.$refs.addTodoindex.$on('addTodoindex',(index)=>this.deleteTodoHome(index)
+  //  this.$refs.addTodoindex.$on('addTodoindex',(index)=>this.deleteTodoHome(index)
+  //  )
+   this.$on('addTodoindex',(index)=>this.addTodoindex(index)
    
    )
    
