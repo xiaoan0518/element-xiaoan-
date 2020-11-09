@@ -1,10 +1,13 @@
 <template>
   <div>
     <div class="warp">
-      <i :class="[control ? 'iconfont icon-xiangyouxiao':'iconfont icon-xiangxiaxiaotubiao']" @click="ishowblack" ></i>
+      <div class="place">
+        <i :class="[control ? 'iconfont icon-xiangyouxiao':'iconfont icon-xiangxiaxiaotubiao']" @click="ishowblack" >显示与隐藏</i>
+      </div>
+      
       <div v-if="ishowContentOne">内容显示区域</div>
     </div>
-    <hr>
+    
   </div>
 </template>
 
@@ -28,9 +31,16 @@ export default {
 
 <style lang="less" scoped>
 
-.iconfont{
- color: red;
- font-size: 30px;
+.place{
+  width: 300px;
+  background: burlywood;
+  position: relative;
+  .iconfont{
+    color: red;
+    background: pink;
+    font-size: 30px;
+    }
+
 }
 
 </style>

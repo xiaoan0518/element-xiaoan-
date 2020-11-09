@@ -31,6 +31,7 @@ export default {
     // background: pink;
     margin: 0 auto;
     .routerview{
+      
       position: absolute;
       left: 50%;
       top: 50%;
